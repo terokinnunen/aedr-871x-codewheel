@@ -5,17 +5,17 @@
     </head>
     <body>
         <script>
-            cpr = 630;
-            barLen = 1.8;
-            lineDensity = 12.52;
-            scale = 1;
+            const cpr = 630;
+            const barLen = 1.8;
+            const lineDensity = 12.52;
+            const scale = 1;
 
-            wheelCirc = 2 * cpr / lineDensity;
-            wheelR = wheelCirc / (2 * Math.PI);
-            radiusInner = wheelR - barLen / 2;
-            radiusOuter = wheelR + barLen / 2;
-            axel = radiusOuter;
-            picSize = radiusOuter * 2;
+            var wheelCirc = 2 * cpr / lineDensity;
+            var wheelR = wheelCirc / (2 * Math.PI);
+            var radiusInner = wheelR - barLen / 2;
+            var radiusOuter = wheelR + barLen / 2;
+            var axel = radiusOuter;
+            var picSize = radiusOuter * 2;
 
             function xy(radius, index) {
                 return (axel + radius * Math.cos(index * Math.PI / cpr)) +
