@@ -17,23 +17,18 @@
             axel = radiusOuter;
             picSize = radiusOuter * 2;
 
-            function x(radius, index) {
-                return axel + radius * Math.cos(index * Math.PI / cpr);
-            }
-            function y(radius, index) {
-                return axel + radius * Math.sin(index * Math.PI / cpr);
+            function xy(radius, index) {
+                return (axel + radius * Math.cos(index * Math.PI / cpr)) +
+                       ',' +
+                       (axel + radius * Math.sin(index * Math.PI / cpr));
             }
             function line(index) {
                 var line = document.createElementNS(svgNS, 'polygon');
                 line.setAttribute('points',
-                    x(radiusInner, index) + ',' +
-                    y(radiusInner, index) + ' ' +
-                    x(radiusOuter, index) + ',' +
-                    y(radiusOuter, index) + ' ' +
-                    x(radiusOuter, index + 1) + ',' +
-                    y(radiusOuter, index + 1) + ' ' +
-                    x(radiusInner, index + 1) + ',' +
-                    y(radiusInner, index + 1));
+                    xy(radiusInner, index) + ' ' +
+                    xy(radiusOuter, index) + ' ' +
+                    xy(radiusOuter, index + 1) + ' ' +
+                    xy(radiusInner, index + 1));
                 return line;
             }
 
