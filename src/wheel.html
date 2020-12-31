@@ -1,0 +1,61 @@
+<html>
+    <head>
+        <meta charset=utf-8 />
+        <title>Wheel</title>
+    </head>
+    <body>
+        <script>
+            cpr = 630;
+            barLen = 1.8;
+            lineDensity = 12.52;
+            scale = 1;
+
+            wheelCirc = 2 * cpr / lineDensity;
+            wheelR = wheelCirc / (2 * Math.PI);
+            radiusInner = wheelR - barLen / 2;
+            radiusOuter = wheelR + barLen / 2;
+            axel = radiusOuter;
+            picSize = radiusOuter * 2;
+
+            function x(radius, index) {
+                return axel + radius * Math.cos(index * Math.PI / cpr);
+            }
+            function y(radius, index) {
+                return axel + radius * Math.sin(index * Math.PI / cpr);
+            }
+            function line(index) {
+                var line = document.createElementNS(svgNS, 'polygon');
+                line.setAttribute('points',
+                    x(radiusInner, index) + ',' +
+                    y(radiusInner, index) + ' ' +
+                    x(radiusOuter, index) + ',' +
+                    y(radiusOuter, index) + ' ' +
+                    x(radiusOuter, index + 1) + ',' +
+                    y(radiusOuter, index + 1) + ' ' +
+                    x(radiusInner, index + 1) + ',' +
+                    y(radiusInner, index + 1));
+                return line;
+            }
+
+            var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            var svgNS = svg.namespaceURI;
+            svg.setAttribute('width', scale * picSize + 'mm');
+            svg.setAttribute('height', scale * picSize + 'mm');
+            svg.setAttribute('viewBox', '0 0 ' + picSize + ' ' + picSize);
+
+            var lines = document.createElementNS(svgNS, 'g');
+            lines.setAttribute('fill', 'black');
+            lines.setAttribute('stroke-width', 0);
+
+            // Last opaque not drawn = white index track
+            for (i = 0; i < 2 * cpr - 2; i += 2) {
+                lines.appendChild(line(i));
+            }
+            // Black index track
+            lines.appendChild(line(2 * cpr - 17));
+
+            svg.appendChild(lines)
+            document.body.appendChild(svg);
+        </script>
+    </body>
+</html>
